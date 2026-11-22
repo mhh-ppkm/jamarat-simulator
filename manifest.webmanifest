@@ -1,0 +1,16 @@
+{
+  "name": "Jamarat Agentic AI 3D Simulator",
+  "short_name": "Jamarat AI",
+  "description": "Supervised AI agents for pilgrim group scheduling at the five-level Jamarat facility. Research prototype, synthetic data only.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0e3a52",
+  "theme_color": "#0e3a52",
+  "icons": [
+    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+    {"src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ]
+}
