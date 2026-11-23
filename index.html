@@ -71,7 +71,7 @@ a{color:var(--cyan)}
 .panel{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:17px;box-shadow:var(--shadow)}
 .panel.flush{padding:0;overflow:hidden}
 .control{margin:12px 0}.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.row.split{justify-content:space-between}.two{display:grid;grid-template-columns:1fr 1fr;gap:9px}
-.btnline{display:flex;gap:7px;flex-wrap:wrap}.btnline button{white-space:nowrap;min-width:0;padding-left:8px;padding-right:8px}.simhead .btnline button{white-space:nowrap}.btnline button{flex:1}
+.btnline{display:flex;gap:7px;flex-wrap:wrap}.btnline button{white-space:nowrap;min-width:0;padding-left:8px;padding-right:8px}.panel .btnline button{flex:1 1 auto}.panel .btnline #play{flex:1 1 100%;font-size:15px}.simhead .btnline button{white-space:nowrap}.btnline button{flex:1}
 .simhead{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
 .statgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:13px}
 .stat{background:var(--panel2);border:1px solid var(--line);border-radius:11px;padding:12px;min-width:0}.stat span{color:var(--muted);font-size:11px;display:block}.stat b{font-size:23px;line-height:1.2;display:block;letter-spacing:-.4px;margin-top:4px;font-variant-numeric:tabular-nums}.stat em{font-size:11px;color:var(--muted);font-style:normal}
@@ -83,7 +83,7 @@ a{color:var(--cyan)}
 #scene3d{position:relative;width:100%;aspect-ratio:1200/760;min-height:300px;border:1px solid var(--line);border-radius:0 0 11px 11px;overflow:hidden;background:var(--chartbg);touch-action:none}#scene3d.locked{touch-action:pan-y}#scene3d.locked canvas{cursor:default}
 #scene3d canvas{display:block;width:100%;height:100%;cursor:grab}#scene3d canvas:active{cursor:grabbing}
 .nogl{padding:40px 24px;color:var(--muted);text-align:center}
-.hint.gone{display:none}.agentkey{display:flex;flex-direction:column;gap:4px;margin-top:8px;font-size:11.5px;color:var(--muted)}.agentkey b{color:var(--text)}.touchgate{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:3;background:rgba(10,30,44,.82);color:#fff;border:1px solid #fff;font-size:13px;padding:10px 16px;border-radius:999px}.touchgate.on{left:auto;right:10px;top:10px;transform:none;font-size:12px;padding:6px 12px}.touchgate[hidden]{display:none}.walkhud{position:absolute;left:10px;top:10px;right:10px;background:rgba(10,30,44,.78);color:#fff;font-size:12px;font-weight:600;padding:7px 10px;border-radius:8px;pointer-events:none;width:max-content;max-width:calc(100% - 20px)}.walkhud[hidden]{display:none}.check{display:flex;gap:8px;align-items:center;margin:10px 0 0;font-weight:500}.check input{width:16px;height:16px;accent-color:var(--cyan)}.hint{position:absolute;left:10px;bottom:10px;background:rgba(10,30,44,.72);color:#fff;font-size:11px;padding:5px 9px;border-radius:7px;pointer-events:none}
+.hint.gone{display:none}.feedbanner{display:flex;gap:12px;align-items:center;justify-content:space-between;margin:0 0 12px;flex-wrap:wrap}.feedbanner[hidden]{display:none}.feedbanner button{flex:none}.agentkey{display:flex;flex-direction:column;gap:4px;margin-top:8px;font-size:11.5px;color:var(--muted)}.agentkey b{color:var(--text)}.touchgate{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:3;background:rgba(10,30,44,.82);color:#fff;border:1px solid #fff;font-size:13px;padding:10px 16px;border-radius:999px}.touchgate.on{left:auto;right:10px;top:10px;transform:none;font-size:12px;padding:6px 12px}.touchgate[hidden]{display:none}.walkhud{position:absolute;left:10px;top:10px;right:10px;background:rgba(10,30,44,.78);color:#fff;font-size:12px;font-weight:600;padding:7px 10px;border-radius:8px;pointer-events:none;width:max-content;max-width:calc(100% - 20px)}.walkhud[hidden]{display:none}.check{display:flex;gap:8px;align-items:center;margin:10px 0 0;font-weight:500}.check input{width:16px;height:16px;accent-color:var(--cyan)}.hint{position:absolute;left:10px;bottom:10px;background:rgba(10,30,44,.72);color:#fff;font-size:11px;padding:5px 9px;border-radius:7px;pointer-events:none}
 .levelkey{display:flex;gap:10px;flex-wrap:wrap;font-size:11px;color:var(--muted)}
 .floors{display:grid;gap:8px}
 .floor{border:1px solid var(--line);background:var(--panel2);border-radius:10px;padding:9px 11px;display:grid;grid-template-columns:78px minmax(0,1fr) 44px;gap:10px;align-items:center}
@@ -158,6 +158,7 @@ details.panel summary{cursor:pointer;color:var(--cyan);font-weight:600}details.p
 <main class="stack center">
 <section class="panel"><div class="simhead"><div><div class="left-title">05 Simulation dashboard</div><h2 style="margin:0">Live experimental run <span class="pill-light" id="simClock">00:00:00</span></h2></div><div class="btnline"><button id="viewBaseline" class="tiny">Baseline view</button><button id="viewAI" class="tiny active">AI-assisted view</button></div></div>
 <div class="statgrid"><div class="stat"><span>Simulated pilgrims</span><b id="kpiTotal">—</b><em>Matched input, both methods</em></div><div class="stat"><span>AI completed</span><b id="kpiCompleted">0</b><em id="kpiBaselineCompleted">Baseline: 0</em></div><div class="stat"><span>AI mean pre-departure wait</span><b id="kpiWait">—</b><em id="kpiBaseWait">Baseline: —</em></div><div class="stat"><span>Simulated AI risk</span><b id="kpiRisk">L1</b><em id="kpiRiskNote">Highest level risk</em></div></div>
+<div id="feedBanner" class="notice danger feedbanner" hidden><span><b>Data feed is off.</b> The AI-assisted run is holding every new departure (fail-safe), so its results stop growing. The baseline ignores the feed and carries on.</span><button id="feedRestore" class="tiny">Restore feed</button></div>
 <div class="canvasbar"><div><strong id="viewTitle">AI-assisted scheduling</strong> <span class="mini">photo-referenced 3D geometry</span></div><div class="legend"><span><span class="dot" style="background:#7addac"></span>Low load</span><span><span class="dot" style="background:#ffc971"></span>Elevated</span><span><span class="dot" style="background:#ff986d"></span>High</span><span><span class="dot" style="background:#fa6777"></span>Critical</span></div></div>
 <div class="viewtools"><button id="orbitHome">Reset camera</button><button id="topView">Top view</button><button id="closeView">Close-up: al-Wusṭā</button><button id="roofToggle">Hide canopies</button><button id="heatToggle" class="active">Heat overlay</button><label>Inspect level <select id="floorFilter"><option value="-1">All five levels</option><option value="0">Level 1</option><option value="1">Level 2</option><option value="2">Level 3</option><option value="3">Level 4</option><option value="4">Level 5</option></select></label><button id="walkView">Pilgrim eye view</button><button id="agentToggle" class="active">Hide agents</button><button id="agentView">Agents view</button></div>
 <div id="scene3d"><div id="walkHud" class="walkhud" hidden></div><button id="touchGate" class="touchgate" hidden>Tap to move the 3D view</button><div class="hint">Drag to orbit · two fingers or right-drag to pan · scroll or pinch to zoom · Pilgrim eye view walks with a group</div></div>
@@ -214,7 +215,7 @@ function generateGroups(c){if(customGroups)return customGroups.map(x=>({...x,all
 }
 function makeEngine(kind){return {kind,groups:rawGroups.map(g=>({...g,allowedFloors:[...g.allowedFloors],assigned:g.floor,release:g.scheduled,progress:0,state:'waiting',endAt:null,departAt:null,adjusted:false,claimed:false,proposedOnce:false,blocked:false})),risk:[1,1,1,1,1],occ:[0,0,0,0,0],pred:[0,0,0,0,0],levelRisk:1,levelMinutes:0,completed:0,departed:0,alerts:0,holds:0,routes:0,lateCount:0,waiting:[],journeys:[],completedPpl:0,departPpl:0,history:[],pending:[],seen:new Set(),lastAnalyse:-30,closures:[false,false,false,false,false]}}
 function isClosed(f,t){return config.scenario==='closure'&&f===2&&t>=20*60&&t<55*60}
-function simMetrics(e){let times=e.waiting.slice().sort((a,b)=>a-b),p90=times.length?times[Math.ceil(times.length*.9)-1]:NaN;return {completed:e.completed,done:e.completedPpl,departed:e.departed,waiting:times.length?times.reduce((a,b)=>a+b,0)/times.length:NaN,p90,journey:e.journeys.length?e.journeys.reduce((a,b)=>a+b,0)/e.journeys.length:NaN,riskMinutes:e.levelMinutes,alerts:e.alerts,routes:e.routes,holds:e.holds}}
+function simMetrics(e){let times=e.waiting.concat(e.groups.filter(g=>g.state==='waiting'&&g.ready<=simTime).map(g=>simTime-g.ready)).sort((a,b)=>a-b),p90=times.length?times[Math.ceil(times.length*.9)-1]:NaN;return {completed:e.completed,done:e.completedPpl,departed:e.departed,waiting:times.length?times.reduce((a,b)=>a+b,0)/times.length:NaN,p90,journey:e.journeys.length?e.journeys.reduce((a,b)=>a+b,0)/e.journeys.length:NaN,riskMinutes:e.levelMinutes,alerts:e.alerts,routes:e.routes,holds:e.holds}}
 function reset(showToast=false){running=false;ending=false;simTime=0;feedOnline=true;feedLastGood=0;lastFrame=0;accumulator=0;config=capture();configuredSignature=signature();rawGroups=generateGroups(config);baseline=makeEngine('baseline');adaptive=makeEngine('ai');snapshots=[];logItems=[];$('feedDot').style.color='var(--green)';$('feedLabel').textContent='Mock feed healthy';$('feedToggle').textContent='Simulate outage';$('play').disabled=false;$('pause').disabled=true;$('play').textContent='▶ Start';$('intervalText').textContent=config.interval.toFixed(1);$('walkSpeedText').textContent=config.walk.toFixed(1)+'×';log('Simulation reset: '+rawGroups.length+' groups; '+rawGroups.reduce((a,g)=>a+g.size,0).toLocaleString()+' hypothetical pilgrims.');log('Input: synthetic Sawaher-style zone aggregates and fictional Tafweej timetable.');renderAll();if(showToast)notify('Scenario reset. Ready for new comparison.')}
 function progressDuration(){return config.day==='10'?780:1530}
 function progressEngine(e,dt){const occ=[0,0,0,0,0];for(const g of e.groups){if(g.state==='active')occ[g.assigned]+=g.size}
@@ -311,7 +312,7 @@ function drawFloorBars(){const e=adaptive;let s='';for(let f=0;f<5;f++){let rati
 function drawCompare(){let bm=simMetrics(baseline),am=simMetrics(adaptive);
  function table(m){return [['Cleared pilgrims',m.done.toLocaleString()],['Completed groups',m.completed+' / '+rawGroups.length],['Mean wait',fmtMin(m.waiting)],['P90 wait',fmtMin(m.p90)],['Mean full journey',fmtMin(m.journey)],['L4 occupancy (min)',round(m.riskMinutes,1)],['Human-approved reroutes',m.routes],['Schedule holds / delays',m.holds]].map(a=>'<tr><td>'+a[0]+'</td><td>'+a[1]+'</td></tr>').join('')}
  $('baseTable').innerHTML=table(bm);$('aiTable').innerHTML=table(am);
- if(bm.completed>0&&am.completed>0){let d=am.p90-bm.p90,dp=(d/bm.p90*100);let phrase=Number.isFinite(dp)?(dp<0?'lower':'higher'):'not comparable';$('outcome').textContent='Current matched-scenario comparison: AI P90 waiting time is '+(Number.isFinite(dp)?Math.abs(dp).toFixed(1)+'% '+phrase:'not yet comparable')+' than baseline. This is a simplified, evolving simulation result, not a validated improvement.'}
+ if(bm.completed>0&&am.completed>0){let d=am.p90-bm.p90,dp=(d/bm.p90*100);let phrase=Number.isFinite(dp)?(dp<0?'lower':'higher'):'not comparable';$('outcome').textContent='Current matched-scenario comparison: AI P90 waiting time is '+(Number.isFinite(dp)?Math.abs(dp).toFixed(1)+'% '+phrase:'not yet comparable')+' than baseline. This is a simplified, evolving simulation result, not a validated improvement.'+(feedOnline?'':' Note: the data feed is off, so the AI-assisted run is holding every new departure (fail-safe) and its line will stay flat until the feed is restored.')}
  else $('outcome').textContent='Waiting for sufficient completed groups to compare both approaches; both engines run with identical synthetic demand.';
 }
 function cssVar(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim()}
@@ -547,12 +548,12 @@ function setup3D(){
  const homeOrbit=()=>({tx:40,ty:30,tz:-20,yaw:2.3,pitch:0.34,r:1150});let orb=homeOrbit();
  const walk={on:false,gid:null,yaw:-Math.PI/2,pitch:-0.09,pos:new T.Vector3(),ready:false};
  const JN={s:'al-Ṣughrā',w:'al-Wusṭā',a:'al-ʿAqabah'};
- function setWalk(on){walk.on=on;walk.gid=null;walk.ready=false;walk.yaw=-Math.PI/2;walk.pitch=-0.09;$('walkView').classList.toggle('active',on);$('walkView').textContent=on?'Leave pilgrim view':'Pilgrim eye view';labels.forEach(l=>l.visible=!on);$('walkHud').hidden=!on;if(on){const hn=host.querySelector('.hint');if(hn)hn.classList.add('gone')}}
+ let walkPrevSpeed=null;function setWalk(on){if(on&&!walk.on){const sp=$('speed');if(sp.value!=='1'){walkPrevSpeed=sp.value;sp.value='1';notify('Speed set to 1× so the camera can keep up with the group.')}}else if(!on&&walk.on&&walkPrevSpeed){$('speed').value=walkPrevSpeed;walkPrevSpeed=null}walk.on=on;walk.gid=null;walk.ready=false;walk.yaw=-Math.PI/2;walk.pitch=-0.09;$('walkView').classList.toggle('active',on);$('walkView').textContent=on?'Leave pilgrim view':'Pilgrim eye view';labels.forEach(l=>l.visible=!on);$('walkHud').hidden=!on;if(on){const hn=host.querySelector('.hint');if(hn)hn.classList.add('gone')}}
  function nextStop(a){if(a.dwell)return 'throwing at '+JN[a.dwell];const order=config&&config.day!=='10'?['s','w','a']:['a'];for(const k of order){if(JX[k]<a.x-3)return 'next: '+JN[k]}return 'heading to the exit, Makkah side'}
  function placeCam(){if(walk.on){let a=walk.gid&&groupAnchor.get(walk.gid);
    if(!a){const c=[...groupAnchor.entries()].filter(([id,v])=>v3.floor<0||v.f===v3.floor);if(c.length){c.sort((p,q)=>q[1].x-p[1].x);const pick=c[Math.min(c.length-1,Math.floor(c.length/2))];walk.gid=pick[0];a=pick[1];walk.ready=false}}
    if(!a){$('walkHud').textContent=running?'Waiting for a group to enter the decks…':'Press Start to walk with a pilgrim group.';if(!walk.ready){walk.pos.set(FAC.xE-5,yL(Math.max(0,v3.floor))+1.65,0);walk.ready=true}}
-   else{const want=a.dwell?new T.Vector3(a.x,a.y+1.65,a.z):new T.Vector3(a.back+5,a.y+2.3,a.lane);if(!walk.ready){walk.pos.copy(want);walk.ready=true}else walk.pos.lerp(want,0.12);
+   else{const want=a.dwell?new T.Vector3(a.x,a.y+1.65,a.z):new T.Vector3(a.back+5,a.y+2.3,a.lane);if(!walk.ready){walk.pos.copy(want);walk.ready=true}else (walk.pos.distanceTo(want)>25?walk.pos.copy(want):walk.pos.lerp(want,0.3));
     $('walkHud').textContent='Walking with group '+walk.gid+' on Level '+(a.f+1)+' · '+nextStop(a)}
    cam.position.copy(walk.pos);const cp=Math.cos(walk.pitch);cam.lookAt(walk.pos.x+Math.sin(walk.yaw)*cp*10,walk.pos.y+Math.sin(walk.pitch)*10,walk.pos.z+Math.cos(walk.yaw)*cp*10);return}
   const cp=Math.cos(orb.pitch);cam.position.set(orb.tx+orb.r*cp*Math.sin(orb.yaw),orb.ty+orb.r*Math.sin(orb.pitch),orb.tz+orb.r*cp*Math.cos(orb.yaw));cam.lookAt(orb.tx,orb.ty,orb.tz)}
@@ -566,7 +567,7 @@ function setup3D(){
  function pan(dx,dy){const k=orb.r*0.0011,cy=Math.cos(orb.yaw),sy=Math.sin(orb.yaw);orb.tx+=-cy*dx*k-sy*dy*k;orb.tz+=sy*dx*k-cy*dy*k;orb.tx=clamp(orb.tx,-1200,1400);orb.tz=clamp(orb.tz,-900,900)}
  const upP=e=>{ptrs.delete(e.pointerId);pinch=0;lastMid=null};el.addEventListener('pointerup',upP);el.addEventListener('pointercancel',upP);
  el.addEventListener('wheel',e=>{e.preventDefault();if(walk.on)return;orb.r=clamp(orb.r*Math.exp(e.deltaY*0.001),220,3600)},{passive:false});
- $('orbitHome').onclick=()=>{setWalk(false);orb=homeOrbit()};$('topView').onclick=()=>{setWalk(false);orb={tx:60,ty:0,tz:0,yaw:Math.PI,pitch:1.5,r:1900}};$('walkView').onclick=()=>setWalk(!walk.on);$('agentToggle').onclick=()=>{v3.agents=!v3.agents;$('agentToggle').classList.toggle('active',v3.agents);$('agentToggle').textContent=v3.agents?'Hide agents':'Show agents'};$('agentView').onclick=()=>{setWalk(false);if(!v3.agents)$('agentToggle').click();orb={tx:200,ty:20,tz:-160,yaw:3.0,pitch:0.4,r:600}};
+ $('orbitHome').onclick=()=>{setWalk(false);orb=homeOrbit()};$('topView').onclick=()=>{setWalk(false);orb={tx:60,ty:0,tz:0,yaw:Math.PI,pitch:1.5,r:1900}};$('walkView').onclick=()=>setWalk(!walk.on);$('feedRestore').onclick=()=>{if(!feedOnline)$('feedToggle').click()};$('agentToggle').onclick=()=>{v3.agents=!v3.agents;$('agentToggle').classList.toggle('active',v3.agents);$('agentToggle').textContent=v3.agents?'Hide agents':'Show agents'};$('agentView').onclick=()=>{setWalk(false);if(!v3.agents)$('agentToggle').click();orb={tx:200,ty:20,tz:-160,yaw:3.0,pitch:0.4,r:600}};
  $('closeView').onclick=()=>{setWalk(false);orb={tx:JX.w,ty:yL(2),tz:0,yaw:2.5,pitch:0.42,r:430}};
  $('roofToggle').textContent='Hide canopies';$('roofToggle').onclick=()=>{v3.roofs=!v3.roofs;$('roofToggle').textContent=v3.roofs?'Hide canopies':'Show canopies';applyVisibility()};
  $('heatToggle').onclick=()=>{v3.heat=!v3.heat;$('heatToggle').classList.toggle('active',v3.heat)};
@@ -579,7 +580,7 @@ function setup3D(){
  R3={figs:()=>figs.count,render(){placeGroups();heat();placeCam();agentsUpdate();renderer.render(scene,cam)}};
 }
 function drawScene(){}
-function renderAll(){if(!baseline||!adaptive)return;$('simClock').textContent=fmt(simTime);$('kpiTotal').textContent=rawGroups.reduce((a,g)=>a+g.size,0).toLocaleString();$('kpiCompleted').textContent=adaptive.completedPpl.toLocaleString();$('kpiBaselineCompleted').textContent='Baseline: '+baseline.completedPpl.toLocaleString();$('kpiWait').textContent=fmtMin(simMetrics(adaptive).waiting);$('kpiBaseWait').textContent='Baseline: '+fmtMin(simMetrics(baseline).waiting);$('kpiRisk').textContent='L'+adaptive.levelRisk;$('kpiRisk').style.color=rgbRisk(adaptive.levelRisk);$('kpiRiskNote').textContent=adaptive.levelRisk>=3?'Requires safety attention':'Highest monitored-zone risk';drawFloorBars();drawCompare();chart();populatePending();$('guardStatus').textContent=feedOnline?'Mock feed fresh; Agent 2 can recommend constrained changes. All route changes require human approval.':'Feed disabled; after 60 simulated seconds the AI release gate fails safe.';
+function renderAll(){if(!baseline||!adaptive)return;{const fb=$('feedBanner');if(fb)fb.hidden=feedOnline;}$('simClock').textContent=fmt(simTime);$('kpiTotal').textContent=rawGroups.reduce((a,g)=>a+g.size,0).toLocaleString();$('kpiCompleted').textContent=adaptive.completedPpl.toLocaleString();$('kpiBaselineCompleted').textContent='Baseline: '+baseline.completedPpl.toLocaleString();$('kpiWait').textContent=fmtMin(simMetrics(adaptive).waiting);$('kpiBaseWait').textContent='Baseline: '+fmtMin(simMetrics(baseline).waiting);$('kpiRisk').textContent='L'+adaptive.levelRisk;$('kpiRisk').style.color=rgbRisk(adaptive.levelRisk);$('kpiRiskNote').textContent=adaptive.levelRisk>=3?'Requires safety attention':'Highest monitored-zone risk';drawFloorBars();drawCompare();chart();populatePending();$('guardStatus').textContent=feedOnline?'Mock feed fresh; Agent 2 can recommend constrained changes. All route changes require human approval.':'Feed disabled; after 60 simulated seconds the AI release gate fails safe.';
  $('policyStatus').className='notice '+(!feedOnline?'danger':adaptive.levelRisk===4?'danger':adaptive.levelRisk>=3?'warn':'ok');$('policyStatus').textContent=!feedOnline?'Simulated feed outage: AI fail-safe protection active.':adaptive.levelRisk===4?'L4 highest risk: no new group departures; manual emergency command takes precedence.':adaptive.levelRisk>=3?'L3 risk: AI cannot reroute without supervisor permission.':'Research mode only: constrained schedule logic, supervised reroutes, no live commands.';
  const e=view==='ai'?adaptive:baseline;$('canvasFoot').textContent=(view==='ai'?'AI-assisted':'Baseline')+' departures: '+e.departed+' / '+rawGroups.length+' groups · active on decks: '+e.groups.filter(g=>g.state==='active').length;
 }
@@ -622,6 +623,113 @@ setup3D();ui();reset();animId=requestAnimationFrame(frame);
 window.JamaratTest={figs:()=>R3&&R3.figs(),getState:()=>({running,simTime,groups:rawGroups.length,baseline:simMetrics(baseline),adaptive:simMetrics(adaptive),pending:adaptive.pending.length,feedOnline}),stepForTest:(n=1)=>{for(let i=0;i<n;i++)step(30);renderAll()},approveFirst:()=>{if(adaptive.pending.length)approve(adaptive.pending[0].id,true)}};
 })();
 
+/* ---------- Step-by-step guide: tour, numbered markers, tick/untick steps ---------- */
+(function(){
+const STEPS=[
+['A','Synthetic data only','Everything here uses made-up (synthetic) demand. Results show how the rules behave, not real Hajj figures.','.topright .tag:last-child'],
+['A','Crowd scenario','Normal demand, a peak-arrival surge, or a restriction that closes Level 3 for part of the run. Start with the peak surge.','#scenario'],
+['A','Ritual day','Day 10 stones al-ʿAqabah only, so groups pass quickly. Days 11 to 13 stone all three Jamrah, so journeys are about twice as long.','#day'],
+['A','Groups and group size','How many groups leave the camps and about how many pilgrims are in each. 65 groups of 240 is about 15,000 pilgrims.','#groupCount'],
+['A','Departure interval','Minutes between one group and the next. Shorter means more crowding.','#departureInterval'],
+['A','Walking speed','1.0 is a normal pace. Try 0.7 for groups with many elderly pilgrims.','#walkSpeed'],
+['A','Simulation speed','Only changes how fast you watch, never the results.','#speed'],
+['A','Pause for approval','Keep ticked to play the supervisor: the run stops whenever Agent 2 asks to reroute a group.','#autoPause'],
+['A','Start, Pause, Reset','Start runs both methods side by side on the same groups: the fixed timetable (baseline) and the AI-assisted run.','#play'],
+['B','Simulated clock','Simulated time since the first group was ready.','#simClock'],
+['B','Simulated pilgrims','Total pilgrims in this run; both methods use the same figure.','.statgrid .stat:nth-child(1)'],
+['B','Pilgrims cleared','Pilgrims who have finished and left, AI arm on top and baseline underneath. Higher earlier means faster clearing.','.statgrid .stat:nth-child(2)'],
+['B','Waiting time','Average wait at the camp before leaving. Groups still waiting are counted too.','.statgrid .stat:nth-child(3)'],
+['B','Highest risk level','L1 low, L2 elevated, L3 high, L4 critical: the worst level in the building right now, rated by Agent 1.','.statgrid .stat:nth-child(4)'],
+['B','Baseline or AI view','Switch the 3D model between the two runs at the same moment.','#viewAI'],
+['B','3D view tools','Reset camera, top view, close-up, canopies, heat colours, one level at a time, pilgrim eye view, and where the agents are.','.viewtools'],
+['B','Reading the 3D model','Decks are coloured by load: green low, amber elevated, orange high, red critical. Figures are pilgrim groups following a flag.','#scene3d'],
+['B','Where the agents are','Cyan: Agent 1 and its sensor nodes. Amber: Agent 2 and the release gates at each ramp. A flashing gate has a proposal waiting.','.agentkey'],
+['B','Agent 1: load per level','Each bar is one level: load against capacity and the 15-minute outlook. This decides the L1 to L4 rating.','#floorBars'],
+['C','Supervised reroute demo','Loads a short scenario where Level 3 closes, so Agent 2 must ask to move waiting groups to Level 4.','#routeDemo'],
+['C','Agent 2 proposals','Proposal cards appear here. Approve sends one to the verifier and the timetable; Reject holds the group for four minutes.','#recommendations'],
+['C','Active decision policy','The rule in force: at L3 a person must approve; at L4 no new group leaves.','#policyStatus'],
+['C','Audit log','Every reading, proposal, approval, rejection and expiry, with its time.','#auditLog'],
+['D','Simulate outage','Cuts the camera feed to test the fail-safe. After 60 s the AI run holds every new departure.','#feedToggle'],
+['D','The red warning','While the feed is off, a red warning appears above the 3D view with a Restore feed button. The baseline ignores the feed.','#feedBanner','.canvasbar'],
+['E','Baseline results','The fixed-timetable run. Key rows: L4 occupancy minutes, mean and P90 wait, full journey time.','#baseTable'],
+['E','AI-assisted results','The same rows for the AI run. Fewer L4 minutes and a lower P90 wait mean the agents helped.','#aiTable'],
+['E','The one-line verdict','Compares the worst-case (P90) waiting time of the two runs. A simulation result, not a validated improvement.','#outcome'],
+['E','Pilgrims cleared over time','The steeper line clears faster. A flat stretch means departures were held.','#chartCanvas'],
+['E','Export the results','Save results as JSON and the event log as CSV.','#exportJson']];
+const PARTS={A:'Set up the run',B:'Read the dashboard',C:'Agent 2 and approvals',D:'Data feed and fail-safe',E:'Analyse the results'};
+const KEY='jamaratGuide.v1';
+let st={markers:false,on:STEPS.map(()=>true)};
+try{const s=JSON.parse(localStorage.getItem(KEY)||'null');if(s&&Array.isArray(s.on)&&s.on.length===STEPS.length)st=s}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}};
+const css=document.createElement('style');css.textContent=`
+.gd-btn{white-space:nowrap}
+.gd-panel{position:fixed;inset:0;z-index:60;background:rgba(6,20,30,.55);display:flex;align-items:center;justify-content:center;padding:14px}
+.gd-panel[hidden]{display:none}
+.gd-card{background:var(--panel,#fff);color:var(--text,#14232d);border:1px solid var(--line,#ccd);border-radius:16px;width:min(620px,100%);max-height:88vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.35)}
+.gd-head{padding:16px 18px 10px;border-bottom:1px solid var(--line,#ccd)}
+.gd-head h3{margin:0 0 4px;font-size:18px}
+.gd-head p{margin:0;font-size:13px;color:var(--muted,#567);text-align:justify}
+.gd-opts{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.gd-opts label{display:flex;gap:8px;align-items:center;font-size:14px;font-weight:600}
+.gd-list{overflow:auto;padding:8px 18px;flex:1}
+.gd-part{font-size:12px;font-weight:800;letter-spacing:.06em;color:#e9741b;margin:10px 0 4px;text-transform:uppercase}
+.gd-item{display:flex;gap:8px;align-items:flex-start;padding:5px 0;font-size:14px}
+.gd-item input{margin-top:3px;flex:none}
+.gd-item .gd-n{flex:none;width:24px;height:24px;border-radius:50%;background:#e9741b;color:#fff;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center}
+.gd-foot{display:flex;gap:8px;flex-wrap:wrap;padding:12px 18px;border-top:1px solid var(--line,#ccd)}
+.gd-foot button{flex:1 1 auto;white-space:nowrap}
+.gd-marker{position:absolute;z-index:40;width:26px;height:26px;border-radius:50%;background:#e9741b;color:#fff;font:800 12px/26px system-ui,sans-serif;text-align:center;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.35);cursor:pointer;padding:0}
+.gd-spot{position:fixed;z-index:58;border:3px solid #e9741b;border-radius:12px;box-shadow:0 0 0 9999px rgba(6,20,30,.55);pointer-events:none;transition:all .25s ease}
+.gd-tip{position:fixed;z-index:59;background:var(--panel,#fff);color:var(--text,#14232d);border:1px solid var(--line,#ccd);border-radius:14px;padding:14px 16px;width:min(380px,calc(100vw - 24px));box-shadow:0 12px 40px rgba(0,0,0,.35)}
+.gd-tip .gd-step{font-size:12px;font-weight:800;color:#e9741b;letter-spacing:.05em;text-transform:uppercase}
+.gd-tip h4{margin:4px 0 6px;font-size:17px}
+.gd-tip p{margin:0 0 12px;font-size:14px;line-height:1.45;text-align:justify;color:var(--muted,#456)}
+.gd-tip .gd-nav{display:flex;gap:8px}
+.gd-tip .gd-nav button{flex:1;white-space:nowrap}
+@media(max-width:700px){.gd-tip{left:12px!important;right:12px;bottom:12px!important;top:auto!important;width:auto}}
+`;document.head.appendChild(css);
+// guide button in header
+const tr=document.querySelector('.topright');const gb=document.createElement('button');gb.className='tiny gd-btn';gb.id='guideBtn';gb.textContent='Step-by-step guide';if(tr)tr.prepend(gb);
+// panel
+const panel=document.createElement('div');panel.className='gd-panel';panel.hidden=true;panel.setAttribute('role','dialog');panel.setAttribute('aria-label','Step-by-step guide');
+document.body.appendChild(panel);
+function renderPanel(){let h='<div class="gd-card"><div class="gd-head"><h3>Step-by-step guide</h3><p>Tick the steps you want. The tour and the numbered markers show only the ticked steps. Your choice is remembered on this device.</p><div class="gd-opts"><label><input type="checkbox" id="gdMarkers"'+(st.markers?' checked':'')+'> Show numbered markers on the page</label></div></div><div class="gd-list">';
+ let last='';STEPS.forEach((s,i)=>{if(s[0]!==last){h+='<div class="gd-part">'+s[0]+' · '+PARTS[s[0]]+'</div>';last=s[0]}h+='<label class="gd-item"><input type="checkbox" data-gd="'+i+'"'+(st.on[i]?' checked':'')+'><span class="gd-n">'+(i+1)+'</span><span><b>'+s[1]+'</b></span></label>'});
+ h+='</div><div class="gd-foot"><button id="gdAll" class="tiny">Tick all</button><button id="gdNone" class="tiny">Untick all</button><button id="gdStart" class="tiny primary">Start the tour</button><button id="gdClose" class="tiny">Close</button></div></div>';
+ panel.innerHTML=h;
+ panel.querySelector('#gdMarkers').onchange=e=>{st.markers=e.target.checked;save();drawMarkers()};
+ panel.querySelectorAll('[data-gd]').forEach(c=>c.onchange=e=>{st.on[+e.target.dataset.gd]=e.target.checked;save();drawMarkers()});
+ panel.querySelector('#gdAll').onclick=()=>{st.on=st.on.map(()=>true);save();renderPanel();drawMarkers()};
+ panel.querySelector('#gdNone').onclick=()=>{st.on=st.on.map(()=>false);save();renderPanel();drawMarkers()};
+ panel.querySelector('#gdClose').onclick=()=>{panel.hidden=true};
+ panel.querySelector('#gdStart').onclick=()=>{panel.hidden=true;startTour()};
+}
+panel.addEventListener('click',e=>{if(e.target===panel)panel.hidden=true});
+gb.onclick=()=>{renderPanel();panel.hidden=false};
+function target(i){const s=STEPS[i];let el=document.querySelector(s[3]);if((!el||el.offsetParent===null)&&s[4])el=document.querySelector(s[4]);return el&&el.offsetParent!==null?el:null}
+// markers
+const layer=document.createElement('div');layer.style.cssText='position:absolute;left:0;top:0;width:0;height:0';document.body.appendChild(layer);
+function drawMarkers(){layer.innerHTML='';if(!st.markers)return;STEPS.forEach((s,i)=>{if(!st.on[i])return;const el=target(i);if(!el)return;const r=el.getBoundingClientRect();if(r.width<2)return;const b=document.createElement('button');b.className='gd-marker';b.textContent=i+1;b.title=s[1];b.setAttribute('aria-label','Guide step '+(i+1)+': '+s[1]);b.style.left=Math.max(2,r.left+window.scrollX-10)+'px';b.style.top=Math.max(2,r.top+window.scrollY-12)+'px';b.onclick=()=>startTour(i);layer.appendChild(b)})}
+window.addEventListener('resize',()=>{drawMarkers();if(tour)place()});setInterval(()=>{if(st.markers&&!tour)drawMarkers()},1500);
+// tour
+let tour=null,spot=null,tip=null;
+function list(){return STEPS.map((s,i)=>i).filter(i=>st.on[i])}
+function startTour(from){const L=list();if(!L.length){notify('Tick at least one step in the guide.');renderPanel();panel.hidden=false;return}
+ tour={L,k:Math.max(0,from!=null?L.indexOf(from):0)};
+ spot=document.createElement('div');spot.className='gd-spot';tip=document.createElement('div');tip.className='gd-tip';tip.setAttribute('role','dialog');document.body.append(spot,tip);show()}
+function endTour(){if(spot)spot.remove();if(tip)tip.remove();spot=tip=null;tour=null;drawMarkers()}
+function show(){const i=tour.L[tour.k],s=STEPS[i],el=target(i);
+ tip.innerHTML='<div class="gd-step">Step '+(tour.k+1)+' of '+tour.L.length+' · '+PARTS[s[0]]+'</div><h4>'+(i+1)+'. '+s[1]+'</h4><p>'+s[2]+(el?'':' <i>(This box is not on screen right now.)</i>')+'</p><div class="gd-nav"><button class="tiny" id="gdBack"'+(tour.k?'':' disabled')+'>Back</button><button class="tiny primary" id="gdNext">'+(tour.k<tour.L.length-1?'Next':'Finish')+'</button><button class="tiny" id="gdEnd">Close</button></div>';
+ tip.querySelector('#gdBack').onclick=()=>{tour.k--;show()};tip.querySelector('#gdNext').onclick=()=>{if(tour.k<tour.L.length-1){tour.k++;show()}else endTour()};tip.querySelector('#gdEnd').onclick=endTour;
+ if(el)el.scrollIntoView({behavior:'smooth',block:'center'});setTimeout(place,380);place()}
+function place(){if(!tour)return;const el=target(tour.L[tour.k]);if(!el){spot.style.opacity=0;tip.style.left='50%';tip.style.top='50%';tip.style.transform='translate(-50%,-50%)';return}
+ tip.style.transform='';spot.style.opacity=1;const r=el.getBoundingClientRect(),p=6;spot.style.left=(r.left-p)+'px';spot.style.top=(r.top-p)+'px';spot.style.width=(r.width+2*p)+'px';spot.style.height=(r.height+2*p)+'px';
+ const tw=tip.offsetWidth,th=tip.offsetHeight,vw=innerWidth,vh=innerHeight;let top=r.bottom+14;if(top+th>vh-8)top=Math.max(8,r.top-th-14);let left=Math.min(Math.max(8,r.left),vw-tw-8);tip.style.left=left+'px';tip.style.top=top+'px'}
+window.addEventListener('scroll',()=>{if(tour)place()},{passive:true});
+document.addEventListener('keydown',e=>{if(!tour)return;if(e.key==='Escape')endTour();else if(e.key==='ArrowRight'){e.preventDefault();tip.querySelector('#gdNext').click()}else if(e.key==='ArrowLeft'&&tour.k){e.preventDefault();tip.querySelector('#gdBack').click()}},true);
+setTimeout(drawMarkers,800);
+})();
+
 </script>
 <script>
 if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{})})}
@@ -630,4 +738,12 @@ document.addEventListener('DOMContentLoaded',()=>{const b=document.getElementByI
 window.addEventListener('appinstalled',()=>{const b=document.getElementById('installApp');if(b)b.hidden=true});
 </script>
 </body>
+</html>
+
+</html>
+
+</html>
+
+</html>
+
 </html>
